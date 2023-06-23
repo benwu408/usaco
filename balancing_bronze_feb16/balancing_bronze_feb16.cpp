@@ -26,6 +26,10 @@ int main() {
         cout << 1 << endl;
         ver_walls.push_back(x + 1);
         cout << 2 << endl;
+        cout << 3 << endl;
+        for (auto it : points){
+            cout << it.first << ' ' << it.second << endl;
+        }
     }
 
     cout << "hello";
