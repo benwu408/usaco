@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <set>
+#include <numeric>
 using namespace std;
 
 int main() {
@@ -9,37 +10,23 @@ int main() {
     int m;
     cin >> n >> m;
     vector<string> spotted;
-    vector<int> mutations;
-
+    vector<int> mutations (m);
+    iota(mutations.begin(), mutations.end(), 1);
+    
     for (int i = 0; i < n; i ++){
         string cow;
         cin >> cow;
         spotted.push_back(cow);
     }
-    string first_regular;
-    cin >> first_regular;
-    for (int i = 0; i < m; i ++){
-        bool mutate = true;
-        for (int k = 0; k < n; k ++){
-            if (first_regular[i] == spotted[k][i]){
-                mutate = false;
-                break;
-            }
-        }
-        if (mutate){
-            mutations.push_back(i);
-        }
-    }
 
-    set<int> to_remove;
-    for (int i = 1; i < n; i ++){
+    for (int i = 0; i < n; i ++){
         string cow;
         cin >> cow;
         vector<int> new_mutations;
         for (auto spot : mutations){
             bool mutate = true;
             for (int k = 0; k < n; k ++){
-                if (cow[spot] == spotted[k][spot]){
+                if (cow[spot - 1] == spotted[k][spot - 1]){
                     mutate = false;
                     break;
                 }
