@@ -7,25 +7,15 @@ int main() {
     cin >> path;
 
     set<pair<char, char> > crosses;
-    set<char> old;
+    set<char> seen;
 
     for (int i = 0; i < 52; i ++){
-        bool cow = true;
-        for (auto it : old){
-            if (it == path[i]){
-                
-                cow = false;
-                break;
-            }
-        }
-        if (cow){
-            old.insert(path[i]);
+        bool cow_unseen = seen.find(path[i]) != seen.end();
+        if (cow_unseen){
+            seen.insert(path[i]);
             for (int n = i + 1; n < 52; n ++){
                 
-                if (path[n] == path[i]){
-                    break;
-                    
-
+                if (path[n] == path[i]) break;
 
                 bool add = true;
                 set<pair<char, char> > new_crosses;
@@ -41,11 +31,10 @@ int main() {
                         new_crosses.insert(it);
                     }
                 }
-                if (add)
-                new_crosses.insert(make_pair(path[i], path[n]));
+                if (add) new_crosses.insert(make_pair(path[i], path[n]));
                 crosses = new_crosses;
                 
-            }
+            
         }
         
     }
