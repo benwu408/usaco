@@ -35,10 +35,11 @@ int main() {
     cout << "hello";
     sort(points.begin(), points.end());
     cout << "hi";
-    hor_walls.pop_back();
+    
     sort(hor_walls.begin(), hor_walls.end());
+    hor_walls.pop_back();
+    sort(ver_walls.begin(), ver_walls.end());
     ver_walls.pop_back();
-    sort(ver_walls.begin(), hor_walls.end());
 
     int min_max = INT32_MAX;
     cout << "points" << endl;
