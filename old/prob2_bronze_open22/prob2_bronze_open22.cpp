@@ -2,7 +2,7 @@
 #include <map>
 using namespace std;
 int main() {
-    map<int, char> cows;
+    map<int, bool> cows;
 
     int n;
     cin >> n;
@@ -13,23 +13,18 @@ int main() {
         int p;
         cin >> dir >> p;
 
-        cows[p] = dir;
+        cows[p] = dir == 'G';
     }
 
 
     for (auto cow : cows){
         int count = 0;
         for (auto cow1 : cows){
-            if (cow1.second == 'G' && cow.first < cow1.first){
-                count ++;
-            }
-            if (cow1.second == 'L' && cow.first > cow1.first){
+            if ((cow1.second && cow.first < cow1.first) || (!cow1.second && cow.first > cow1.first)){
                 count ++;
             }
         }
-        if (count < min_lying){
-            min_lying = count;
-        }
+        min_lying = min(min_lying, count);
     }
     cout << min_lying << endl;
 }
