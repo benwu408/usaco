@@ -31,19 +31,20 @@ int main() {
     // }
     // cout << "intial" << endl;
     // cout << lowest.first << " " << lowest.second << endl;
-    // // cout << rightest.first << " " << rightest.second << endl;
+    // cout << rightest.first << " " << rightest.second << endl;
     // cout << endl;
 
     while (lowest != make_pair(-1, -1)){
         // cout << lowest.first << " " << lowest.second << endl;
         // cout << rightest.first << " " << rightest.second << endl;
         // if (lowest == rightest){
-            pair<int, int> old_corner = lowest;
+            pair<int, int> old_corner = make_pair(lowest.first, lowest.second);
+            cout << old_corner.first << old_corner.second << endl;
             // rightest = make_pair(-1, -1);
             lowest = make_pair(-1, -1);
-            for (int y = 0; y <= old_corner.second; y ++){
-                for (int x = 0; x < n; x ++){
-                    if (x <= old_corner.first) rows[y][x] = (rows[y][x] + 1)%2;
+            for (int y = 0; y < rows.size(); y ++){
+                for (int x = 0; x < rows[0].size(); x ++){
+                    if (x <= old_corner.first && y <= old_corner.second) rows[y][x] = (rows[y][x] + 1)%2;
                     if (rows[y][x] == 1){
                         if (y >= lowest.second) lowest = make_pair(x, y);
                         // if (x >= rightest.first) rightest = make_pair(x, y);
