@@ -5,23 +5,22 @@ using namespace std;
 int main() {
     int n;
     cin >> n;
-    int begin = 0;
+
+    int current_time = 0;
     vector<pair<int, int> > cows;
     for (int i = 0; i < n; i ++){
         int arrival;
-        int time;
-        cin >> arrival >> time;
-        cows.push_back(make_pair(arrival, time));
+        int duration;
+        cin >> arrival >> duration;
+        cows.push_back(make_pair(arrival, duration));
     }
+
     sort(cows.begin(), cows.end());
 
-    for (int i = 0; i < n; i ++){
-        // cout << it.first << " " << it.second << endl;
-        int arrival = cows[i].first;
-        int time = cows[i].second;
-        if (arrival >= begin) begin = arrival + time;
-        else begin = begin + time;
-
+    for (auto pair : cows) {
+        if (pair.first >= current_time) current_time = pair.first + pair.second;
+        else current_time = current_time + pair.second;
     }
-    cout << begin << endl;
+    
+    cout << current_time << endl;
 }
