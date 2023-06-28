@@ -26,31 +26,37 @@ int main() {
     }
 
     sort(cows.begin(), cows.end());
-
+    // print_vector(cows);
     for (auto cow : cows){
         vector<int> blasted = {cow};
-        cout << "TESTING " << cow << endl;
+        // cout << "TESTING " << cow << endl;
         for (int i = 1; i < n + 1; i ++){
-            cout << "blast " << i << endl;
+            // cout << "blast " << i << endl;
             bool left = true;
             bool right = true;
+            int blast_start = blasted[0];
+            int blast_end = blasted[blasted.size() - 1];
+            // cout << "START " << blast_start << endl;
+            // cout << "END " << blast_end << endl; 
             for (int x = 1; x <= i; x ++){
-                if (find(cows.begin(), cows.end(), blasted[0] - x) != cows.end() && left){
-                    cout << "found " << (blasted[0] - x) << endl;
-                    blasted.insert(blasted.begin(), blasted[0] - x);
-                } else left = false;
+                // cout << "range " << x << endl; 
+                if (find(cows.begin(), cows.end(), blast_start - x) != cows.end() && left){
+                    // cout << "found " << (blast_start - x) << endl;
+                    blasted.insert(blasted.begin(), blast_start - x);
+                }
                 // cout << blasted[-1] + x << endl;
-                if (find(cows.begin(), cows.end(), blasted[blasted.size() - 1] + x) != cows.end() && right){
-                    cout << "found " << (blasted.size() - 1) << endl;
-                    blasted.push_back(blasted[blasted.size() - 1] + x);
-                } else right = false;
-                if (!left && !right) break;
+                if (find(cows.begin(), cows.end(), blast_end + x) != cows.end() && right){
+                    // cout << "found " << (blast_end + x) << endl;
+                    blasted.push_back(blast_end + x);
+                } 
+                
                 
             }
+            if (blast_start == blasted[0] && blast_end == blasted[blasted.size() - 1]) break;
             
         }
         max_blasted = max(max_blasted, int(blasted.size()));
-        print_vector(blasted); 
+        // print_vector(blasted); 
     }
     cout << max_blasted << endl;
 }
