@@ -17,13 +17,20 @@ int main() {
 
     map<int, set<int> > connects;
 
+    for (int i = 1; i <= n; i ++){
+        set<int> vec;
+        connects[i] = vec;
+    }
+
+    
+    
 
     for (int i = 0; i < n; i ++){
         int begin;
         int end;
         cin >> begin >> end;
 
-        connects[end] = set<int> {begin};
+        connects[end].insert(begin);
     }
 
     bool change = true;
@@ -49,4 +56,5 @@ int main() {
         }
     }
     if (!found) cout << -1 << endl;
+    
 }
