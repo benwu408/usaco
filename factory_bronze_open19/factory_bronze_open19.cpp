@@ -22,9 +22,6 @@ int main() {
         connects[i] = vec;
     }
 
-    
-    
-
     for (int i = 0; i < n; i ++){
         int begin;
         int end;
@@ -36,25 +33,24 @@ int main() {
     bool change = true;
     while (change){
         map<int, set<int> > new_connects = connects;
+        change = false;
         for (auto it : connects){
             for (auto itr : it.second){
-                for (auto itt : connects[itr]){
-                    new_connects[it.first].insert(itt);
+                new_connects[it.first].insert(connects[itr].begin(), connects[itr].end());
+                if (new_connects[it.first].size() > connects[it.first].size()) {
+                    change = true;
                 }
             }
         }
-        if (new_connects == connects){
-            change = false;
-        } else connects = new_connects;
+        connects = new_connects;
     }
-    bool found = false;
+
     for (auto it : connects){
         if (it.second.size() == n - 1) {
             cout << it.first << endl;
-            found = true;
-            break;
+            return 0;
         }
     }
-    if (!found) cout << -1 << endl;
+    cout << -1 << endl;
     
 }
