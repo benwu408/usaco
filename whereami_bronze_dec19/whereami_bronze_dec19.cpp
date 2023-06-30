@@ -49,9 +49,10 @@ int main() {
     // cout << max;
     int n;
     cin >> n;
+    int max_common = 0;
 
     vector<char> mailboxes;
-    unordered_set<vector<char> > sequences;
+    set<vector<char> > sequences;
 
     for (int i = 0; i < n; i ++){
         char box;
@@ -59,8 +60,14 @@ int main() {
         mailboxes.push_back(box);
     }
     for (int i = 0; i < n; i ++){
-        for (int x = 0; x < n; x ++){
-            
+        for (int x = i + 1; x <= n; x ++){
+            int prev_len = sequences.size();
+            vector<char> new_(mailboxes.begin() + i, mailboxes.begin() + x);
+            sequences.insert(new_);
+            if (sequences.size() == prev_len){
+                max_common = max(x - i + 1, max_common);
+            }
         }
     }
+    cout << max_common << endl;
 }
