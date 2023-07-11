@@ -20,7 +20,8 @@ int main() {
 
     sort(cows.begin(), cows.end());
 
-    for (auto cow : cows){
+    for (int a = 0; a < n; a ++){
+        int cow = cows[a];
         vector<int> blasted = {cow};
 
         bool left = true;
@@ -30,23 +31,45 @@ int main() {
             
             int blast_start = blasted[0];
             int blast_end = blasted[blasted.size() - 1];
+            int blast_start_index = find(cows.begin(), cows.end(), blast_start) - cows.begin();
+            int blast_end_index = find(cows.begin(), cows.end(), blast_end) - cows.begin();
+            
 
-            for (int x = 1; x <= i; x ++){
-                if (find(cows.begin(), cows.end(), blast_start - x) != cows.end() && left){
-                    blasted.insert(blasted.begin(), blast_start - x);
+            if (left){
+                int count = 0;
+                int found = true;
+                while (found && blast_start_index - count - 1 >= 0){
+                    if (cows[blast_start_index - count - 1] >= blast_start - i){
+                        blasted.insert(blasted.begin(), cows[blast_start_index - count - 1]);
+                        count ++;
+                    }
+                    else{
+                        found = false;
+                    }
                 }
-                
-                if (find(cows.begin(), cows.end(), blast_end + x) != cows.end() && right){
-                    blasted.push_back(blast_end + x);
-                }
-                
-                
             }
+            if (right){
+                int count = 0;
+                int found = true;
+                while (found && blast_end_index + count + 1 < cows.size()){
+                    if (cows[blast_end_index + count + 1] <= blast_end + i){
+                        blasted.push_back(cows[blast_end_index + count + 1]);
+                        count ++;
+                    }
+                    else{
+                        found = false;
+                    }
+                }
+            }
+
             if (blast_start == blasted[0] && blast_end == blasted[blasted.size() - 1]) break;
             if (blast_start == blasted[0]) left = false;
             if (blast_end == blasted[blasted.size() - 1]) right = false;
             
+            
         }
+        
+
         max_blasted = max(max_blasted, int(blasted.size()));
 
     }
