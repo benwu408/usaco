@@ -22,55 +22,68 @@ int main() {
 
     for (int a = 0; a < n; a ++){
         int cow = cows[a];
-        vector<int> blasted = {cow};
+
+
 
         bool left = true;
         bool right = true;
 
+        int blast_start = cow;
+        int blast_end = cow;
+        int blast_start_index = a;
+        int blast_end_index = a;
+
         for (int i = 1; i < n + 1; i ++){
             
-            int blast_start = blasted[0];
-            int blast_end = blasted[blasted.size() - 1];
-            int blast_start_index = find(cows.begin(), cows.end(), blast_start) - cows.begin();
-            int blast_end_index = find(cows.begin(), cows.end(), blast_end) - cows.begin();
-            
+            int next_start = blast_start;
+            int next_end = blast_end;
+            int next_start_index = blast_start_index;
+            int next_end_index = blast_end_index;
 
             if (left){
                 int count = 0;
                 int found = true;
                 while (found && blast_start_index - count - 1 >= 0){
                     if (cows[blast_start_index - count - 1] >= blast_start - i){
-                        blasted.insert(blasted.begin(), cows[blast_start_index - count - 1]);
+                        next_start = cows[blast_start_index - count - 1];
+                        next_start_index = blast_start_index - count - 1;
                         count ++;
                     }
                     else{
                         found = false;
                     }
                 }
+                
             }
             if (right){
                 int count = 0;
                 int found = true;
                 while (found && blast_end_index + count + 1 < cows.size()){
                     if (cows[blast_end_index + count + 1] <= blast_end + i){
-                        blasted.push_back(cows[blast_end_index + count + 1]);
+                        next_end = cows[blast_end_index + count + 1];
+                        next_end_index = blast_end_index + count + 1;
                         count ++;
                     }
                     else{
                         found = false;
                     }
                 }
+                
             }
 
-            if (blast_start == blasted[0] && blast_end == blasted[blasted.size() - 1]) break;
-            if (blast_start == blasted[0]) left = false;
-            if (blast_end == blasted[blasted.size() - 1]) right = false;
+            if (next_start == blast_start && blast_end == next_end) break;
+            if (blast_start == next_start) left = false;
+            if (blast_end == next_end) right = false;
+            blast_end = next_end;
+            blast_end_index = next_end_index;
+            blast_start = next_start;
+            blast_start_index = next_start_index;
             
             
         }
         
-
-        max_blasted = max(max_blasted, int(blasted.size()));
+        
+        max_blasted = max(max_blasted, 1 + blast_end_index - blast_start_index);
 
     }
     cout << max_blasted << endl;
