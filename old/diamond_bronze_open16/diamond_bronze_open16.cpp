@@ -18,20 +18,16 @@ int main() {
     sort(diamonds.begin(), diamonds.end());
 
     int begin = 0;
-    int end = n - 1;
-    int max = 0;
+    int maxRange = 0;
     for (int i = 0; i < n; i ++){
-        int diamond = diamonds[i];
-        if (diamond - diamonds[begin] > k){
-            if (i - begin > max){
-                max = i - begin;
-            }
-            begin += 1;
+        if (diamonds[i] - diamonds[begin] > k){
+            maxRange = max(maxRange, i - begin);
+            begin ++;
             
         }
     }
-    if (max == 0){
-        max = n;
+    if (maxRange == 0){
+        maxRange = n;
     }
-    cout << max << endl;
+    cout << maxRange << endl;
 }
