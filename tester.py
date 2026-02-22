@@ -27,6 +27,7 @@ def run_test(i):
     ret = 0
     if result == expected:
         ret = 1
+        print ("PASSED " + str(i))
     else:
         print("FAILED " + str(i))
         # print("Expected: " + expected)
@@ -43,8 +44,8 @@ subprocess.call(["g++", "-std=c++11", "-o", filename, filename + ".cpp"]) # buil
 temp = foldername + "/" + "temp.out" #name of test file out
 pass_count = 0 #passed test cases
 
-for i in range(1, 11): #loop through all tests
+for i in range(1, 16): #loop through all tests
     pass_count += run_test(i)
 
-if pass_count == 10: #if passed ten, say passed all
+if pass_count == 15: #if passed ten, say passed all
     print("PASSED ALL")
